@@ -14,18 +14,20 @@ public class PlayerInteraction : MonoBehaviour {
 	public bool canJump = true;
 	public float jumpHeight = 2.0f;
 	private bool grounded = false;
-
+	//Global variables
 
 
 	void Awake () {
+		//gets rigidbody and then makes it so it cant rotate but uses gravitiy
 		rigidbody = gameObject.GetComponent<Rigidbody> ();
 		rigidbody.freezeRotation = true;
 		rigidbody.useGravity = false;
 	}
 
 	void FixedUpdate () {
-		var camy = Input.GetAxis("Mouse Y") * Time.deltaTime * sensitivity ;
+		var camy = Input.GetAxis("Mouse Y") * Time.deltaTime * - sensitivity ;
 		cam.transform.Rotate(camy, 0, 0);
+		//makes camera face up or down
 		if (grounded) {
 			// Calculate how fast we should be moving
 			Vector3 targetVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
@@ -63,12 +65,14 @@ public class PlayerInteraction : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision col){
+		//checks to see type of object collided with and sets text accordingly
 		if (col.gameObject.tag == "Storage") {
 			openDialouge ();
 		}
 	}
 
 	void onCollisionExit(Collision col){
+		//on leaving gets rid of text
 		endDialouge ();
 	}
 	void endDialouge(){
